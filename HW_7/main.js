@@ -14,8 +14,8 @@ console.log(
 );
 
 console.log(
-    "3. occupation ? occupation : role  ============== ",
-    occupation ? occupation : role
+    "3. occupation || role  ========================== ",
+    occupation || role
 );
 
 console.log(
@@ -23,7 +23,4 @@ console.log(
     !!name && (age > 18) || role == 'Admin'
 );
 
-console.log(
-    "* (!!name && role !== 'Admin') && age  ========== ",
-    (!!name && role !== 'Admin') && age
-);
+console.log( (!!name && role !== 'Admin') && age );
