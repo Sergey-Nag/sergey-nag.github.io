@@ -23,4 +23,7 @@ console.log(
     !!name && (age > 18) || role == 'Admin'
 );
 
-console.log( (!!name && role !== 'Admin') && age );
+console.log(
+    "* (!!name && role !== 'Admin') && age  ========== ",
+    (!!name && role !== 'Admin') && age
+);
