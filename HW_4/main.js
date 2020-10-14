@@ -28,7 +28,7 @@ const message = isWannaBear ? "Пиво в холодильнике" : "Тогд
     ПРИМЕР №2
     Конструкция if
 */
-const age = 36;
+const age;
 
 let message = '';
 
