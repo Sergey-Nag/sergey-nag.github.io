@@ -1,28 +1,34 @@
-'use strict';
+"use strict";
 
 let isCorrectNumber = false;
 
+
 do {
+  const inputNumber = +prompt("Введите целое число", "");
 
-    const inputNumber = +prompt('Введите целое число', '');
+  isCorrectNumber = !!inputNumber && inputNumber > 1;
 
-    isCorrectNumber = !!inputNumber && inputNumber > 0;
-
-    if (isCorrectNumber) {
-        alert(!!inputNumber && returnPrimeNumbers(inputNumber));
-    } else {
-        alert('Повторите попытку');
-    }
-
+  if (isCorrectNumber) {
+    alert(returnPrimeNumbers(inputNumber));
+  } else {
+    alert("Повторите попытку");
+  }
 } while (!isCorrectNumber);
 
 
 function returnPrimeNumbers(number) {
-    let result = [];
+  let result = [];
 
-    for (let i = 0; i < number; i++) {
-        if (i % 2 == 0) result.push(i);
-    }
+  for (let i = 2; i <= number; i++) {
+    if (isPrimeNumber(i)) result.push(i);
+  }
 
-    return result;
+  return result;
+}
+
+function isPrimeNumber(number) {
+  for (let i = 2; i < number; i++) {
+    if (number % i === 0) return false;
+  }
+  return true;
 }
