@@ -10,30 +10,24 @@ function filterPurchases(purchases, toBuy, postponed) {
   }
 }
 
+function returnLaterPurchasesString(postponedPurchases) {
+  let laterPurchasesNames = '';
+  for (let i = 0; i < postponedPurchases.length; i += 1) {
+    if (postponedPurchases[i].hasDiscount && postponedPurchases[i].isAvailable) {
+      laterPurchasesNames += ((laterPurchasesNames)? ', ' : '') + postponedPurchases[i].name; 
+    }
+  }
+  return laterPurchasesNames;
+}
+
 function buy(purchases) {
   const purchasesToBuy = []
   const postponedPurchases = [];
   filterPurchases(purchases, purchasesToBuy, postponedPurchases);
 
-  let laterPurchasesNames = '';
-
-
-  // Проверяю, есть ли среди отложенных покупок товары со скидкой, присутствующие на складе
-  for (let i = 0; i < postponedPurchases.length; i += 1) {
-    if (postponedPurchases[i].hasDiscount) {
-      if (laterPurchasesNames) {
-        if (postponedPurchases[i].isAvailable) {
-          laterPurchasesNames += ', ' + postponedPurchases[i].name;
-        }
-      } else {
-        if (postponedPurchases[i].isAvailable) {
-          laterPurchasesNames += postponedPurchases[i].name;
-        }
-      }
-    }
-  }
-
-
+  const laterPurchasesNames = returnLaterPurchasesString(postponedPurchases);
+  
+  
   let isPostponed = true;
 
 
