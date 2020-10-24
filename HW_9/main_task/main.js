@@ -16,15 +16,16 @@ function runGame(randomNumber) {
 
     if (!userNumber) return;
 
-    const isWin = getResults(userNumber, randomNumber);
-
-    if (isWin) winGame(tryCount, randomNumber);
-
-    tryCount++;
+    if (isWin(userNumber, randomNumber)) {
+      winGame(tryCount, randomNumber);
+      break;
+    } else {
+      tryCount++;
+    }
   }
 }
 
-function getResults(userNum, randNum) {
+function isWin(userNum, randNum) {
   if (userNum === randNum) return true;
   else if (userNum > randNum) message = "Много";
   else message = "Мало";
@@ -33,10 +34,13 @@ function getResults(userNum, randNum) {
 }
 
 function winGame(tryCount, number) {
+  message = "";
+
   isGameStarted = confirm(
     `Вы Выиграли!!!
-  Число = ${number},  
-  Попыток = ${tryCount}
+
+Угаданное число = ${number}
+Попыток = ${tryCount}
 
 Сыграть еще?`
   );
