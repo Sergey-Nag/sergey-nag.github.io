@@ -15,21 +15,14 @@ function buy(purchases) {
     },
     function () {
       onSuccess(
-        `Поздравляем, ${user.name}! Вы приобрели: ${concatProductsBy(
-          "name",
-          purchasesToBuy
-        )}`,
-        `New purchases: ${concatProductsBy("id", purchasesToBuy)}, user: ${
-          user.id
-        }.`
+        `Поздравляем, ${user.name}! Вы приобрели: ${concatProductsBy("name", purchasesToBuy)}`,
+        `New purchases: ${concatProductsBy("id", purchasesToBuy)}, user: ${user.id}.`
       );
     },
     function () {
       onError(
         `Извините, ${user.name}, но что-то пошло не так :(`,
-        `Failed purchases: ${concatProductsBy("id", purchasesToBuy)}, user: ${
-          user.id
-        }.`
+        `Failed purchases: ${concatProductsBy("id", purchasesToBuy)}, user: ${user.id}.`
       );
     }
   );
