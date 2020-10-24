@@ -35,6 +35,7 @@ function buy(purchases) {
   );
 }
 
+
 function sortPurchasesByChecked(purchases, arrToBuy, arrPostponed) {
   for (let i = 0; i < purchases.length; i += 1) {
     if (purchases[i].isChecked) arrToBuy.push(purchases[i]);
