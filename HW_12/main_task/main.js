@@ -17,10 +17,15 @@ const salaries = {
 
 
 function returnDoubledObject(obj) {
-  obj = {...obj};
-  
-  for (let key in obj) {
+  let newObj = {};
+
+  for (let key1 in obj) {
+    newObj[key1] = {...obj[key1]};
     
+    for (let key2 in obj[key1]) {
+      newObj[key1][key2] *= 2;
+    }
   }
   
+  return newObj;
 }
