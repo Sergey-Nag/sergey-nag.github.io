@@ -3,11 +3,7 @@
 // 1. Функция pow(a, b), которая возводит a в степень b. Оператор ** и Math.pow не использовать.
 function pow(a, b) {
   let result = a;
-
-  for (let i = 1; i < b; i++) {
-    result *= a;
-  }
-
+  for (let i = 1; i < b; i++) result *= a;
   return result;
 }
 
