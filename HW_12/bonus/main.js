@@ -1,22 +1,41 @@
 'use strict';
 
 const usersData = {
-  'serg': 'serg1'
+  'serg': {
+    isLogined: false,
+    password: 'serg1'
+  }
 };
 
 let login = prompt('Введите логин', '');
-let password;
+console.log(signIn(login, ''));
 
-console.log(isUserRegistered(login, password));
-
-if (usersData[login]) {
+if (usersData[login] && !usersData[login].isLogined) {
   
-  while (!isUserRegistered(login, password)) {
-    password = prompt('Введите пароль');
-  }
+  let isUserExist = askAndCheckPassword(login);
 
+  if (isUserExist) authUser(login);
+
+} else {
+  let isRegisterign = confirm(`Пользователя с именем ${login} еще не существует, хотите зарегистрироваться?`);
+
+  if (isRegisterign) {
+    let password = prompt('Введите пароль', '');
+
+  }
 }
 
-function isUserRegistered(login, pass) {
-  return usersData[login] === pass;
+function authUser(login) {
+  usersData[login].isLogined = true;
+}
+
+function askAndCheckPassword(login) {
+  while (true) {
+    let pass = prompt('Введите пароль', '');
+    if (signIn(login, pass)) return true;
+  }
+}
+
+function signIn(login, pass) {
+  return usersData[login]?.password === pass;
 }
