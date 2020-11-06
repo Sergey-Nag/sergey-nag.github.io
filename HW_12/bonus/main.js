@@ -1,41 +1,65 @@
-'use strict';
+"use strict";
 
 const usersData = {
-  'serg': {
+  admin: {
+    password: "administrator",
     isLogined: false,
-    password: 'serg1'
-  }
+  },
+  serg: {
+    password: "serg1",
+    isLogined: false,
+  },
 };
 
-let login = prompt('Введите логин', '');
-console.log(signIn(login, ''));
+auth();
 
-if (usersData[login] && !usersData[login].isLogined) {
-  
-  let isUserExist = askAndCheckPassword(login);
+function auth() {
+  const login = prompt("Введите логин", "");
 
-  if (isUserExist) authUser(login);
+  if (!login) return;
 
-} else {
-  let isRegisterign = confirm(`Пользователя с именем ${login} еще не существует, хотите зарегистрироваться?`);
+  if (usersData[login]) loginUser(login);
+  else createUser(login);
 
-  if (isRegisterign) {
-    let password = prompt('Введите пароль', '');
+  if (usersData[login]?.isLogined) alert(`Добро пожаловать ${login}`);
+}
 
+function loginUser(login) {
+  let pass = askPassword(login);
+
+  if (pass) usersData[login].isLogined = true;
+}
+
+
+function createUser(login) {
+  const isRegistering = confirm(`Пользователя с именем ${login} еще не существует, хотите зарегистрироваться?`);
+
+  if (!isRegistering) return;
+
+  let pass = "";
+  while (pass === "" && pass !== null) pass = prompt("Введите пароль", "");
+
+  if (pass) {
+    usersData[login] = { password: pass, isLogined: false};
+   
+    const isAuth = confirm('Хотите залогиниться?');
+    
+    if(isAuth) loginUser(login);
   }
 }
 
-function authUser(login) {
-  usersData[login].isLogined = true;
-}
-
-function askAndCheckPassword(login) {
+function askPassword(login) {
+  let message = "";
   while (true) {
-    let pass = prompt('Введите пароль', '');
-    if (signIn(login, pass)) return true;
+    let pass = prompt(message + "Введите пароль", "");
+
+    if (pass === null) return;
+
+    if (isPasswordCorrect(login, pass)) return pass;
+    else message = "Пароль неверный\n";
   }
 }
 
-function signIn(login, pass) {
+function isPasswordCorrect(login, pass) {
   return usersData[login]?.password === pass;
 }
