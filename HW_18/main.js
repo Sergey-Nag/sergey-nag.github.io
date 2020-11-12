@@ -7,7 +7,5 @@ function capitalize(string) {
 
 function checkSubstring(string, substring) {
   return string.toLowerCase()
-    .includes(
-      substring.toLowerCase()
-    );
+    .includes(substring.toLowerCase());
 }
