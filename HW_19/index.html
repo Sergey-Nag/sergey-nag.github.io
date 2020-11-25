@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Операции с DOM</title>
+</head>
+
+<body>
+  <div class="header">
+  </div>
+  <section id="container">
+    <ul>
+      <li class="first">one</li>
+      <li class="second">two</li>
+      <li class="third">three</li>
+    </ul>
+    <ol>
+      <li class="first">one</li>
+      <li class="second">two</li>
+      <li class="third">three</li>
+    </ol>
+  </section>
+  <div class="footer">
+  </div>
+
+  <script>
+    'use strict';
+
+    // Выберите section с id“ container” без метода querySelector и с ним.
+    const container1 = document.getElementById('container');
+    const container2 = document.querySelector('#container');
+
+    console.log(container1, container2);
+    
+    
+    // Выберите все li с классом "second".
+    const secondLi = document.querySelectorAll('li.second');
+    
+    console.log(secondLi);
+    
+    
+    // Выберите li с классом "third" внутри ol.
+    const thirdLi = document.querySelector('ol .third');
+    
+    console.log(thirdLi);
+    
+    
+    // Поместите текст“ Hello” в элемент с классом“ header”.
+    document.querySelector('.header').textContent = 'Hello';
+    
+    
+    // Добавьте класс“ main” элементу с классом“ footer”, а затем уберите его.
+    const footer = document.querySelector('.footer');
+    
+    footer.classList.add('main');
+    footer.classList.remove('main');
+    
+    
+    // Создайте новый элемент li, затем добавьте в него текст "four".
+    const fourLi = document.createElement('li')
+    
+    fourLi.textContent = 'four';
+    
+    
+    // Поместите li в элемент ul.
+    document.querySelector('ul').append(fourLi);
+    
+    
+    // Сделайте зелёный фон всем li внутри ol.
+    const olItems = document.querySelectorAll('ol li');
+    
+    for (let item of olItems) item.style.backgroundColor = 'green';
+    
+    
+    // Удалите div с классом“ footer”.
+    footer.remove();
+
+
+  </script>
+</body>
+
+</html>
