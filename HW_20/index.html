@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Сортировка таблицы</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <table>
+    <thead>
+      <tr>
+        <td class="col-title none">
+          <span class="title"><i class="fa fa-chevron-up"></i>Rank</span>
+        </td>
+        <td class="col-title active">
+          <span class="title"><i class="fa fa-chevron-up"></i>Name</span>
+        </td>
+        <td class="col-title">
+          <span class="title"><i class="fa fa-chevron-up"></i>Total net worth</span>
+        </td>
+        <td class="col-title">
+          <span class="title"><i class="fa fa-chevron-up"></i>$ Last change</span>
+        </td>
+        <td class="col-title">
+          <span class="title"><i class="fa fa-chevron-up"></i>$ YTD change</span>
+        </td>
+        <td class="col-title">
+          <span class="title"><i class="fa fa-chevron-up"></i>Country</span>
+        </td>
+        <td class="col-title">
+          <span class="title"><i class="fa fa-chevron-up"></i>Industry</span>
+        </td>
+      </tr>
+    </thead>
+    <tbody class="data">
+      <tr class="data-row">
+        <td class="id">1</td>
+        <td class="name active">Jeff Bezos</td>
+        <td class="total">$183B</td>
+        <td class="change">+$1.05B</td>
+        <td class="change">+$68.1B</td>
+        <td class="country">United States</td>
+        <td class="industry">Technology</td>
+      </tr>
+      <tr class="data-row">
+        <td class="id">2</td>
+        <td class="name">Elon R Musk</td>
+        <td class="total">$136B</td>
+        <td class="change">+$7.70B</td>
+        <td class="change">+$108B</td>
+        <td class="country">United States</td>
+        <td class="industry">Technology</td>
+      </tr>
+      <tr class="data-row">
+        <td class="id">3</td>
+        <td class="name">Bill Gates</td>
+        <td class="total">$129B</td>
+        <td class="change">+$1.26B</td>
+        <td class="change">+$15.8B</td>
+        <td class="country">United States</td>
+        <td class="industry">Technology</td>
+      </tr>
+      <tr class="data-row">
+        <td class="id">4</td>
+        <td class="name">Mark Zuckerberg</td>
+        <td class="total">$105B</td>
+        <td class="change">+$3.12B</td>
+        <td class="change">+$26.5B</td>
+        <td class="country">United States</td>
+        <td class="industry">Technology</td>
+      </tr>
+      <tr class="data-row">
+        <td class="id">5</td>
+        <td class="name">Bernard Arnault</td>
+        <td class="total">$105B</td>
+        <td class="change">+$89.7M</td>
+        <td class="change down">-$647M</td>
+        <td class="country">France</td>
+        <td class="industry">Consumer</td>
+      </tr>
+      <tr class="data-row">
+        <td class="id">6</td>
+        <td class="name">Warren Buffett</td>
+        <td class="total">$88.4B</td>
+        <td class="change">+$1.62B</td>
+        <td class="change">-$883M</td>
+        <td class="country">United States</td>
+        <td class="industry">Diversified</td>
+      </tr>
+      <tr class="data-row">
+        <td class="id">7</td>
+        <td class="name">Larry Page</td>
+        <td class="total">$82.7B</td>
+        <td class="change">+$1.46B</td>
+        <td class="change">+$18.1B</td>
+        <td class="country">United States</td>
+        <td class="industry">Technology</td>
+      </tr>
+
+      <tr class="data-row">
+        <td class="id">8</td>
+        <td class="name">Sergey Brin</td>
+        <td class="total">$80.1B</td>
+        <td class="change">+$1.40B</td>
+        <td class="change">+$17.4B</td>
+        <td class="country">United States</td>
+        <td class="industry">Technology</td>
+      </tr>
+      <tr class="data-row">
+        <td class="id">9</td>
+        <td class="name">Steve Ballmer</td>
+        <td class="total">$77.4B</td>
+        <td class="change">+$1.27B</td>
+        <td class="change">+$19.2B</td>
+        <td class="country">United States</td>
+        <td class="industry">Technology</td>
+      </tr>
+
+      <tr class="data-row">
+        <td class="id">10</td>
+        <td class="name">Mukesh Ambani</td>
+        <td class="total">$74.9B</td>
+        <td class="change">+$846M</td>
+        <td class="change">+$16.2B</td>
+        <td class="country">India</td>
+        <td class="industry">Energy</td>
+      </tr>
+
+      <tr class="data-row">
+        <td class="id">11</td>
+        <td class="name">Larry Ellison</td>
+        <td class="total">$71.1B</td>
+        <td class="change">+$1.84B</td>
+        <td class="change">+$12.3B</td>
+        <td class="country">United States</td>
+        <td class="industry">Technology</td>
+      </tr>
+
+      <tr class="data-row">
+        <td class="id">12</td>
+        <td class="name">Francoise Bettencourt Meyers</td>
+        <td class="total">$70.4B</td>
+        <td class="change">-$1.99B</td>
+        <td class="change">+$11.4B</td>
+        <td class="country">France</td>
+        <td class="industry">Consumer</td>
+      </tr>
+
+      <tr class="data-row">
+        <td class="id">13</td>
+        <td class="name">Amancio Ortega</td>
+        <td class="total">$69.7B</td>
+        <td class="change">+$2.14B</td>
+        <td class="change">-$5.78B</td>
+        <td class="country">Spain</td>
+        <td class="industry">Retail</td>
+      </tr>
+
+      <tr class="data-row">
+        <td class="id">14</td>
+        <td class="name">Rob Walton</td>
+        <td class="total">$64.9B</td>
+        <td class="change">+$247M</td>
+        <td class="change">+$10.7B</td>
+        <td class="country">United States</td>
+        <td class="industry">Retail</td>
+      </tr>
+
+      <tr>
+        <td class="id">15</td>
+        <td class="name">Jim Walton</td>
+        <td class="total">$64.8B</td>
+        <td class="change">+$238M</td>
+        <td class="change">+$10.7B</td>
+        <td class="country">United States</td>
+        <td class="industry">Retail</td>
+      </tr>
+
+      <tr class="data-row">
+        <td class="id">16</td>
+        <td class="name">Alice Walton</td>
+        <td class="total">$64.7B</td>
+        <td class="change">+$229M</td>
+        <td class="change">+$11.7B</td>
+        <td class="country">United States</td>
+        <td class="industry">Retail</td>
+      </tr>
+
+      <tr class="data-row">
+        <td class="id">17</td>
+        <td class="name">Zhong Shanshan</td>
+        <td class="total">$64.3B</td>
+        <td class="change">-$865M</td>
+        <td class="change">+$57.4B</td>
+        <td class="country">China</td>
+        <td class="industry">Diversified</td>
+      </tr>
+
+      <tr class="data-row">
+        <td class="id">18</td>
+        <td class="name">MacKenzie Scott</td>
+        <td class="total">$59.9B</td>
+        <td class="change">+$384M</td>
+        <td class="change">+$22.9B</td>
+        <td class="country">United States</td>
+        <td class="industry">Technology</td>
+      </tr>
+
+      <tr class="data-row">
+        <td class="id">19</td>
+        <td class="name">Pony Ma</td>
+        <td class="total">$58.2B</td>
+        <td class="change">-$183M</td>
+        <td class="change">+$19.6B</td>
+        <td class="country">China</td>
+        <td class="industry">Technology</td>
+      </tr>
+
+      <tr class="data-row">
+        <td class="id">20</td>
+        <td class="name">Julia Flesher Koch</td>
+        <td class="total">$56.4B</td>
+        <td class="change">+$997M</td>
+        <td class="change">-$5.67B</td>
+        <td class="country">United States</td>
+        <td class="industry">Industrial</td>
+      </tr>
+    </tbody>
+  </table>
+  <script src="main.js"></script>
+</body>
+
+</html>
