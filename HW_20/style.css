@@ -1,3 +1,7 @@
+:root {
+  --padding-width: 20%;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -17,22 +21,27 @@ table {
 
 thead {
   font-weight: 900;
-  font-size: .9em;
+  font-size: .85em;
 }
 
 td {
+  min-width: 110px;
   padding: 13px 20px;
-/*  min-width: 150px;*/
 }
 
 thead tr td:first-child,
 .data-row td:first-child {
-  padding-left: 20%;
+  padding-left: var(--padding-width);
 }
 
 thead tr td:last-child,
 .data-row td:last-child {
-  padding-right: 20%;
+  padding-right: var(--padding-width);
+}
+
+@media screen and (max-width: 768px) {
+  :root {--padding-width: 20px;}
+  body {font-size: 14px;}
 }
 
 
@@ -49,12 +58,6 @@ thead tr td:last-child,
   text-decoration: underline dashed;
 }
 
-/*
-.col-title .fa::before {
-  display: none;
-  margin-right: 5px;
-}
-*/
 .col-title::before {
   content: "\f0dc";
   font-size: .9em;
