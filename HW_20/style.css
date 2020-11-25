@@ -10,6 +10,7 @@ body {
 }
 
 table {
+  width: 100%;
   margin: 50px auto;
   border-spacing: 0;
 }
@@ -18,6 +19,22 @@ thead {
   font-weight: 900;
   font-size: .9em;
 }
+
+td {
+  padding: 13px 20px;
+/*  min-width: 150px;*/
+}
+
+thead tr td:first-child,
+.data-row td:first-child {
+  padding-left: 20%;
+}
+
+thead tr td:last-child,
+.data-row td:last-child {
+  padding-right: 20%;
+}
+
 
 .data-row:nth-child(odd) {
   background-color: #f7f7f7;
@@ -28,29 +45,40 @@ thead {
   padding-bottom: 20px;
 }
 
-.col-title.active {
+.col-title.active .title {
   text-decoration: underline dashed;
 }
 
+/*
 .col-title .fa::before {
   display: none;
   margin-right: 5px;
 }
-
-.col-title.active .fa::before {
-  display: inline;
+*/
+.col-title::before {
+  content: "\f0dc";
+  font-size: .9em;
+  font-family: 'FontAwesome';
+  color: grey;
+  margin-right: 5px;
 }
 
-td {
-  padding: 13px 20px;
+.col-title.active::before {
+  content: "\f0dd";
 }
+
+.col-title.active.up::before {
+  content: "\f0de";
+}
+
 
 td.active {
   font-weight: bolder;
 }
 
 .total,
-.change {
+.change,
+.align-right {
   text-align: right;
 }
 
