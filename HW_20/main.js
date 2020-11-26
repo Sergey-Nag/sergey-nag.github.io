@@ -21,8 +21,6 @@ function activeColumn(e) {
     count: 1,
   };
 
-  // console.log(colsSettings);
-
   toggleIndicator(colHeader, colsSettings[colIndex].sortAdjust);
 
   const isSorted = sortTable(colIndex, colsSettings[colIndex]);
@@ -43,7 +41,13 @@ function getColumnIndex(arr, title) {
 
 function clearActiveHeaders() {
   const headers = document.querySelectorAll(".col-title.active");
-  for (let head of headers) head.className = 'col-title';
+  for (let head of headers) {
+    if (head.classList.contains('align-right')) {
+      head.className = 'col-title align-right';
+    } else {
+      head.className = 'col-title';
+    }
+  }
 }
 
 function toggleIndicator(header, sortAdjust) {
@@ -68,17 +72,15 @@ function sortTable(columnIndex, colSettings) {
       const cellA = returnCellValue(a.children[columnIndex]);
       const cellB = returnCellValue(b.children[columnIndex]);
 
-      return cellA > cellB
-        ? colSettings.sortAdjust
-        : colSettings.sortAdjust * -1;
+      return cellA > cellB ?
+        colSettings.sortAdjust :
+        colSettings.sortAdjust * -1;
     });
 
     dataTableRows.append(...dataRows);
 
     return true;
   } else {
-    // dataRows = [...];
-
     dataTableRows.append(...originalData);
 
     return false;
@@ -97,7 +99,10 @@ function returnCellValue(obj) {
 }
 
 function returnValidNumber(string) {
-  const multipliers = { M: 1e6, B: 1e9 };
+  const multipliers = {
+    M: 1e6,
+    B: 1e9
+  };
   const power = string[string.length - 1];
 
   const stringNumber = string.replace("$", "").replace(power, "");
