@@ -9,6 +9,7 @@ for (let header of colsHeader) {
   header.addEventListener("click", activeColumn);
 }
 
+
 function activeColumn(e) {
   const colHeader = e.target.closest(".col-title");
   const colTitle = colHeader.textContent.trim();
@@ -21,9 +22,9 @@ function activeColumn(e) {
     count: 1,
   };
 
-  toggleIndicator(colHeader, colsSettings[colIndex].sortAdjust);
 
   const isSorted = sortTable(colIndex, colsSettings[colIndex]);
+  toggleIndicator(colHeader, colsSettings[colIndex].sortAdjust);
 
   if (isSorted) {
     colsSettings[colIndex].sortAdjust = colsSettings[colIndex].sortAdjust * -1;
@@ -39,19 +40,19 @@ function getColumnIndex(arr, title) {
   return arr.findIndex((elem) => elem.textContent.trim() === title);
 }
 
-function clearActiveHeaders() {
+
+function clearActiveHeaders(isSettingsClear = false) {
   const headers = document.querySelectorAll(".col-title.active");
+
   for (let head of headers) {
-    if (head.classList.contains('align-right')) {
-      head.className = 'col-title align-right';
-    } else {
-      head.className = 'col-title';
-    }
+    head.className = head.classList.contains('align-right') ? 'col-title align-right' : 'col-title';
   }
 }
 
+
+
 function toggleIndicator(header, sortAdjust) {
-  clearActiveHeaders();
+  clearActiveHeaders(true);
 
   if (!header.classList.contains('active')) header.classList.add("active");
 
@@ -64,17 +65,16 @@ function toggleIndicator(header, sortAdjust) {
   }
 }
 
+
 function sortTable(columnIndex, colSettings) {
   let dataRows = [...dataTableRows.children];
-
+  console.log(colSettings)
   if (colSettings.count < 3) {
     dataRows.sort((a, b) => {
       const cellA = returnCellValue(a.children[columnIndex]);
       const cellB = returnCellValue(b.children[columnIndex]);
 
-      return cellA > cellB ?
-        colSettings.sortAdjust :
-        colSettings.sortAdjust * -1;
+      return cellA > cellB ? colSettings.sortAdjust : colSettings.sortAdjust * -1;
     });
 
     dataTableRows.append(...dataRows);
@@ -85,8 +85,8 @@ function sortTable(columnIndex, colSettings) {
 
     return false;
   }
-
 }
+
 
 function returnCellValue(obj) {
   const content = obj.textContent;
@@ -97,6 +97,7 @@ function returnCellValue(obj) {
 
   return content;
 }
+
 
 function returnValidNumber(string) {
   const multipliers = {
