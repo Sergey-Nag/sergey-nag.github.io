@@ -1,32 +1,34 @@
-function buy(purchases) {
-  const purchasesToBuy = [];
-  const postponedPurchases = [];
+'use strict';
 
-  sortPurchasesByChecked(purchases, purchasesToBuy, postponedPurchases);
-
-  checkDiscountPostponedPurchases(purchasesToBuy, postponedPurchases);
-
-  const paymentMethod = user.paymentMethod ?? askUserPaymentMethod(user.id);
-
-  senBuyRequest(
-    {
-      purchases: purchasesToBuy,
-      paymentMethod: paymentMethod,
-    },
-    function () {
-      onSuccess(
-        `Поздравляем, ${user.name}! Вы приобрели: ${concatProductsBy("name", purchasesToBuy)}`,
-        `New purchases: ${concatProductsBy("id", purchasesToBuy)}, user: ${user.id}.`
-      );
-    },
-    function () {
-      onError(
-        `Извините, ${user.name}, но что-то пошло не так :(`,
-        `Failed purchases: ${concatProductsBy("id", purchasesToBuy)}, user: ${user.id}.`
-      );
+function filterPurchases(purchases, toBuy, postponed) {
+  for (let i = 0; i < purchases.length; i += 1) {
+    if (purchases[i].isChecked) {
+      toBuy.push(purchases[i]);
+    } else {
+      postponed.push(purchases[i]);
     }
-  );
+  }
 }
+
+function returnLaterPurchasesString(postponedPurchases) {
+  let laterPurchasesNames = '';
+  for (let i = 0; i < postponedPurchases.length; i += 1) {
+    if (postponedPurchases[i].hasDiscount && postponedPurchases[i].isAvailable) {
+      laterPurchasesNames += ((laterPurchasesNames)? ', ' : '') + postponedPurchases[i].name; 
+    }
+  }
+  return laterPurchasesNames;
+}
+
+function buy(purchases) {
+  const purchasesToBuy = []
+  const postponedPurchases = [];
+  filterPurchases(purchases, purchasesToBuy, postponedPurchases);
+
+  const laterPurchasesNames = returnLaterPurchasesString(postponedPurchases);
+  
+  
+  let isPostponed = true;
 
 
 function sortPurchasesByChecked(purchases, arrToBuy, arrPostponed) {
