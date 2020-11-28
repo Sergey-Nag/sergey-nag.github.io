@@ -35,7 +35,7 @@ td {
 .col-title {
   position: relative;
   cursor: pointer;
-  user-select: none; 
+  user-select: none;
   padding-bottom: 20px;
 }
 
@@ -45,7 +45,7 @@ td {
 
 .col-title::before {
   content: "\f0dc";
-  font-size: .9em;
+  font-size: 0.9em;
   font-family: "FontAwesome";
   color: rgb(192, 192, 192);
   margin-right: 5px;
@@ -61,7 +61,7 @@ td {
   color: black;
 }
 
-.col-title.active.primary .title{
+.col-title.active.primary .title {
   text-decoration: underline solid;
 }
 
@@ -73,11 +73,12 @@ td {
   top: 2px;
   text-align: center;
   color: grey;
-  font-size: .9em;
+  font-size: 0.9em;
   border-radius: 50%;
   width: 17px;
   height: 17px;
 }
+
 .col-title.active.primary::after {
   color: white;
   background: rgb(48, 128, 233);
@@ -96,9 +97,7 @@ td.active {
 .change {
   color: #008555;
 }
-.change.up::before {
-  content: "+";
-}
+
 .change.down {
   color: #eb0025;
 }
