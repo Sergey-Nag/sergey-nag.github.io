@@ -3,7 +3,8 @@
 const colsHeader = document.querySelectorAll(".col-title");
 const dataTableRows = document.querySelector("#data");
 const originalData = [...dataTableRows.children];
-const colsSettings = {};
+
+const state = new State();
 
 for (let header of colsHeader) {
   header.addEventListener("click", activeColumn);
@@ -16,76 +17,83 @@ function activeColumn(e) {
 
   const colIndex = getColumnIndex(headersArr, colTitle);
 
-  colsSettings[colIndex] = colsSettings[colIndex] ?? {
-    sortAdjust: 1,
-    count: 1,
-  };
-
-  toggleIndicator(colHeader, colsSettings[colIndex].sortAdjust);
-
-  const isSorted = sortTable(colIndex, colsSettings[colIndex]);
-
-  if (isSorted) {
-    colsSettings[colIndex].sortAdjust = colsSettings[colIndex].sortAdjust * -1;
-    colsSettings[colIndex].count++;
-  } else {
-    colsSettings[colIndex] = null;
-    clearActiveHeaders();
-  }
+  sortTable(colIndex);
 }
-
 
 function getColumnIndex(arr, title) {
   return arr.findIndex((elem) => elem.textContent.trim() === title);
 }
 
-function clearActiveHeaders() {
-  const headers = document.querySelectorAll(".col-title.active");
-  for (let head of headers) {
-    if (head.classList.contains('align-right')) {
-      head.className = 'col-title align-right';
-    } else {
-      head.className = 'col-title';
-    }
-  }
-}
-
-function toggleIndicator(header, sortAdjust) {
-  clearActiveHeaders();
-
-  if (!header.classList.contains('active')) header.classList.add("active");
-
-  if (sortAdjust === -1) {
-    header.classList.remove("up");
-    header.classList.add("down");
-  } else {
-    header.classList.remove("down");
-    header.classList.add("up");
-  }
-}
-
-function sortTable(columnIndex, colSettings) {
+function sortTable(columnIndex) {
   let dataRows = [...dataTableRows.children];
 
-  if (colSettings.count < 3) {
-    dataRows.sort((a, b) => {
-      const cellA = returnCellValue(a.children[columnIndex]);
-      const cellB = returnCellValue(b.children[columnIndex]);
+  if (state.isContains(columnIndex)) state.update(columnIndex);
+  else state.add(columnIndex);
 
-      return cellA > cellB ?
-        colSettings.sortAdjust :
-        colSettings.sortAdjust * -1;
-    });
-
-    dataTableRows.append(...dataRows);
-
-    return true;
+  if (state.length() > 0) {
+    dataRows.sort((a, b) => compareAllValues([...state.stateArr], a, b));
   } else {
-    dataTableRows.append(...originalData);
-
-    return false;
+    dataRows = originalData;
   }
 
+  dataTableRows.append(...dataRows);
+
+  toggleIndicators(columnIndex);
+}
+
+function State() {
+  this.stateArr = [];
+
+  this.add = (index) => {
+    this.stateArr.push({
+      index,
+      sortAdjust: 1,
+      count: 1,
+    });
+  };
+
+  this.update = (index) => {
+    const currElem = this.getElement(index);
+
+    if (currElem.count === 2) {
+      this.remove(index);
+      return;
+    }
+
+    currElem.sortAdjust = currElem.sortAdjust * -1;
+    currElem.count++;
+  };
+
+  this.remove = (index) => {
+    this.stateArr.splice(this.getPositionInArr(index), 1);
+  };
+
+  this.getElement = (index) => {
+    return this.stateArr[this.getPositionInArr(index)];
+  };
+
+  this.isContains = (index) => {
+    return this.getPositionInArr(index) !== -1 ? true : false;
+  };
+
+  this.getPositionInArr = (index) => {
+    return this.stateArr.findIndex((elem) => elem.index === index);
+  };
+
+  this.length = () => {
+    return this.stateArr.length;
+  };
+}
+
+function compareAllValues(arr, a, b) {
+  const lastElem = arr.shift();
+
+  const cellA = returnCellValue(a.children[lastElem.index]);
+  const cellB = returnCellValue(b.children[lastElem.index]);
+
+  if (arr.length !== 0 && cellA === cellB) return compareAllValues(arr, a, b);
+
+  return cellA > cellB ? lastElem.sortAdjust : lastElem.sortAdjust * -1;
 }
 
 function returnCellValue(obj) {
@@ -93,19 +101,65 @@ function returnCellValue(obj) {
 
   if (!isNaN(content)) return +content;
 
-  if (content.includes("$")) return returnValidNumber(content);
+  if (content.includes("$")) return returnValidMoneyNumber(content);
 
   return content;
 }
 
-function returnValidNumber(string) {
+function returnValidMoneyNumber(string) {
   const multipliers = {
     M: 1e6,
-    B: 1e9
+    B: 1e9,
   };
+
   const power = string[string.length - 1];
 
   const stringNumber = string.replace("$", "").replace(power, "");
 
   return stringNumber * multipliers[power];
+}
+
+function toggleIndicators(index) {
+  const elem = state.getElement(index);
+  const activeHeader = document.querySelector(
+    `.col-title:nth-child(${index + 1})`
+  );
+
+  togglePrimaryIndicators();
+
+  if (!elem) {
+    activeHeader.className = activeHeader.classList.contains("align-right")
+      ? "col-title align-right"
+      : "col-title";
+
+    return;
+  }
+
+  activeHeader.classList.add("active");
+
+  toggleUpDownIndicator(activeHeader, elem);
+}
+
+function togglePrimaryIndicators() {
+  const primaryHeaderState = state.stateArr[0];
+
+  [...document.querySelectorAll(".col-title")].forEach((elem, i) => {
+    elem.classList.remove("primary");
+
+    if (state.isContains(i))
+      elem.setAttribute("data-index", state.getPositionInArr(i) + 1);
+
+    if (!!primaryHeaderState && i === primaryHeaderState.index)
+      elem.classList.add("primary");
+  });
+}
+
+function toggleUpDownIndicator(header, elem) {
+  if (elem.sortAdjust === -1) {
+    header.classList.remove("up");
+    header.classList.add("down");
+  } else {
+    header.classList.remove("down");
+    header.classList.add("up");
+  }
 }
