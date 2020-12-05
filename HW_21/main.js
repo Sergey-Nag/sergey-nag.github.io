@@ -16,11 +16,11 @@ function activeListItems(e) {
   if (!currTarget) return;
 
   if (activeTarget === currTarget) {
-    blurActiveClass();
+    blurActiveItem();
 
     activeTarget = null;
   } else {
-    blurActiveClass();
+    blurActiveItem();
 
     activeTarget = currTarget;
 
@@ -28,7 +28,7 @@ function activeListItems(e) {
   }
 }
 
-function blurActiveClass() {
+function blurActiveItem() {
   document.querySelector('.list__item_active')?.classList.remove('list__item_active');
 }
 
@@ -44,7 +44,7 @@ function addItemToList() {
 
   input.value = "";
 
-  blurActiveClass();
+  blurActiveItem();
 }
 
 function removeActiveItemFromList() {
