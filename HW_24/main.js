@@ -1,5 +1,6 @@
 "use strict";
 
+
 // №1
 function createRangeFilter(min, max) {
   return function (i) {
@@ -10,6 +11,7 @@ function createRangeFilter(min, max) {
 const test = [1, 2, 3, 4, 5, 6].filter(createRangeFilter(2, 4));
 
 console.log(test);
+
 
 // №2
 function createKeyBy(propName) {
@@ -35,6 +37,7 @@ const testArr = [
 const keyBy = createKeyBy("name");
 
 console.log(keyBy(testArr));
+
 
 // №3
 function createCalcPercent(percent) {
