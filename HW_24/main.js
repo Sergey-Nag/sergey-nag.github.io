@@ -9,44 +9,29 @@ function createRangeFilter(min, max) {
 
 const test = [1, 2, 3, 4, 5, 6].filter(createRangeFilter(2, 4));
 
-console.log(test);
 
 // №2
 function createKeyBy(propName) {
   return function (arr) {
-    return arr.reduce((prev, curr) => {
-      prev.push(curr[propName]);
-      return prev;
-    }, []);
+    return arr.reduce((obj, curr) => {
+      const objKey = curr[propName];
+
+      obj[objKey] = obj[objKey] || [];
+  
+      obj[objKey].push(curr);
+  
+      return obj;
+    }, {});
   };
 }
 
 const testArr = [
-  {
-    a: "1",
-    b: "2",
-    c: "3",
-  },
-  {
-    a: "4",
-    b: "5",
-    c: "6",
-  },
-  {
-    a: "7",
-    b: "8",
-    c: "9",
-  },
-  {
-    a: "10",
-    b: "11",
-    c: "22",
-  },
-];
+  {name: 'Vasya', surname: 'Ivanov'},
+  {name: 'Vanya', surname: 'Ivanov'},
+  {name: 'Albert', surname: 'Vasyliev'},
+]
 
-const keyBy = createKeyBy("c");
-
-console.log(keyBy(testArr));
+const keyBy = createKeyBy("surname");
 
 // №3
 function createCalcPercent(percent) {
@@ -56,6 +41,3 @@ function createCalcPercent(percent) {
 }
 
 const calcPercent = createCalcPercent(50);
-
-console.log(calcPercent(100));
-console.log(calcPercent(50));
