@@ -4,7 +4,7 @@
 // №1
 function createRangeFilter(min, max) {
   return function (i) {
-    return i >= min && i <= max ? true : false;
+    return i >= min && i <= max;
   };
 }
 
