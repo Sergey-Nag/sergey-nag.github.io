@@ -19,7 +19,7 @@ function createKeyBy(propName) {
     return arr.reduce((obj, curr) => {
       const objKey = curr[propName];
 
-      obj[objKey] = obj[objKey] || [];
+      obj[objKey] = obj[objKey] ?? [];
   
       obj[objKey].push(curr);
   
