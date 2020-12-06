@@ -9,6 +9,7 @@ function createRangeFilter(min, max) {
 
 const test = [1, 2, 3, 4, 5, 6].filter(createRangeFilter(2, 4));
 
+console.log(test);
 
 // №2
 function createKeyBy(propName) {
@@ -31,7 +32,9 @@ const testArr = [
   {name: 'Albert', surname: 'Vasyliev'},
 ]
 
-const keyBy = createKeyBy("surname");
+const keyBy = createKeyBy("name");
+
+console.log(keyBy(testArr));
 
 // №3
 function createCalcPercent(percent) {
@@ -41,3 +44,6 @@ function createCalcPercent(percent) {
 }
 
 const calcPercent = createCalcPercent(50);
+
+console.log(calcPercent(100));
+console.log(calcPercent(50));
