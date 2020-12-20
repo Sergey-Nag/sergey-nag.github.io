@@ -40,7 +40,7 @@ immutableArray.prototype = {
     return Array.prototype.unshift.call([...this], arg);
   },
   splice: function(...args) {
-    return Array.prototype.splice.call([...this], ...args);
+    return Array.prototype.splice.call([...this], args);
   },
   sort: function(arg) {
     return Array.prototype.sort.call([...this], arg);
