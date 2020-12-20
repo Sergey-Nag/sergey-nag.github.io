@@ -3,16 +3,19 @@ String.prototype.reverse = function () {
   return this.split("").reverse().join("");
 };
 
+
 // №2
 Array.prototype._sort = Array.prototype.sort;
 Array.prototype.sort = function (arg) {
   return [...this]._sort(arg);
 };
 
+
 // №3
 NodeList.prototype.map = Array.prototype.map;
 NodeList.prototype.reduce = Array.prototype.reduce;
 NodeList.prototype.find = Array.prototype.find;
+
 
 // *
 function immutableArray() {}
