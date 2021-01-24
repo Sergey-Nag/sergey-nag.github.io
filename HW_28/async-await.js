@@ -1,60 +1,157 @@
 "use strict";
 
+const USERS_EXAMPLE = [
+  {
+    firstName: "Vasya",
+    lastName: "Ivanov",
+  },
+  {
+    firstName: "Ivan",
+    lastName: "Vasiliev",
+  },
+  {
+    firstName: "Ivas",
+    lastName: "Vasolyov",
+  },
+];
 
+// getRandomNumberPromise();
 
-async function getRandomNumberAsync() {
-  try {
-    const request = await fetch(URL + "/unstable?maxRandom=20&prob=50");
+// secondTask();
 
-    if (!request.ok) throw new Error(request.statusText);
+// thirdTask();
 
-    const response = await request.text();
-    for (let i = 1; i <= +response; i++) console.count("Hello World");
-  } catch (e) {
-    console.error("ОШИБКА:", e);
-  }
+function getRandomNumberPromise() {
+  requestRandomNumber(20, 50)
+    .then((resNumber) => {
+      if (!resNumber) throw new Error("number wasn't generated");
+
+      for (let i = 1; i <= +resNumber; i++) console.count("Hello World");
+    })
+    .catch(handleError);
 }
 
-async function createUserAsync() {
-  const reqCreate = await requestDemoAsync("POST", "/objects?prob=20", USER_EXAMPLE);
-  if (!reqCreate) return;
+function requestRandomNumber(maxNumber, prob) {
+  return requestDemoPromise(
+    "GET",
+    `/stable?maxRandom=${maxNumber}&prob=${prob}`
+  )
+    .then((res) => {
+      if (!res) throw new Error("Error max number");
 
-  const resCreate = await reqCreate.json();
-  console.log(reqCreate.statusText, resCreate);
-
-  const reqPatch = await requestDemoAsync("PATCH", `/objects/${resCreate.id}/?prob=20`, { age: 20 });
-  if (!reqPatch) return;
-
-  const resPatch = await reqPatch.json();
-  console.log(reqPatch.statusText, resPatch);
-
-  const reqDelete = await requestDemoAsync("DELETE", `/objects/${resCreate.id}/?prob=20`);
-  if (!reqDelete) return;
-
-  console.log(reqDelete.statusText);
-    
+      return res.text();
+    })
+    .catch(handleError);
 }
 
-async function requestDemoAsync(type, query, postData) {
-  try {
-    const req = await fetch(URL + query, {
-      method: type,
-      headers: {
-        "Content-type": "application/json;charset=utf-8",
-      },
-      body: JSON.stringify(postData),
-    });
+function createUser(userData, prob) {
+  return requestDemoPromise("POST", "/objects", userData).then((res) => {
+    if (!res) throw new Error("Error create user");
 
-    if (!req.ok) return new Error(type, req.statusText);
-
-    return req;
-  } catch (error) {
-    console.error(error)
-  }
+    console.log("User created");
+    return res.json();
+  });
 }
 
+function secondTask() {
+  const errorProb = 0;
 
+  createUser(USERS_EXAMPLE[0], errorProb)
+    .then((createdUser) => {
+      if (!createdUser) throw new Error("user wasn't created");
+      return updateUserAge(createdUser.id, 33, errorProb);
+    })
+    .then((updatedUser) => {
+      if (!updatedUser) throw new Error("user's age wasn't updated");
+      return removeUser(updatedUser.id, errorProb);
+    })
+    .catch(handleError);
+}
 
-// getRandomNumberAsync();
+function removeUser(userId, prob) {
+  return requestDemoPromise("DELETE", `/objects/${userId}?prob=${prob}`).then(
+    (res) => {
+      if (!res) throw new Error("Error remove user");
 
-createUserAsync();
+      console.log("User removed");
+    }
+  );
+}
+
+function updateUserAge(userId, age, prob) {
+  return requestDemoPromise("PATCH", `/objects/${userId}/?prob=${prob}`, {
+    age,
+  }).then((res) => {
+    if (!res) throw new Error("Error update age");
+
+    console.log("User age updated");
+    return res.json();
+  });
+}
+
+function thirdTask() {
+  const errorProb = 5;
+  let usersId = [];
+
+  Promise.all(
+    USERS_EXAMPLE.map((userData) => {
+      return createUser(userData, errorProb);
+    })
+  )
+    .then((res) => {
+      if (!res) throw new Error("Create User Error");
+
+      usersId = res.map((el) => el.id);
+
+      return getRandomAges(errorProb);
+    })
+    .then((ages) => {
+      if (!ages) throw new Error("Create Random Ages Error");
+
+      return usersId.map((id, i) => {
+        return updateUserAge(id, ages[i], errorProb);
+      });
+    })
+    .then((res) => {
+      if (!res) throw new Error("Update User's Age Error");
+
+      return requestRandomNumber(3, errorProb);
+    })
+    .then((randId) => {
+      if (!randId) throw new Error("Random Number ID Error");
+
+      for (let i = 0; i < 3; i++) {
+        if (randId === i) continue;
+
+        removeUser(usersId[i], errorProb);
+      }
+    })
+    .catch(handleError);
+}
+
+function getRandomAges(prob) {
+  return Promise.all(
+    USERS_EXAMPLE.map((el) => {
+      return requestRandomNumber(100, prob);
+    })
+  );
+}
+
+function requestDemoPromise(type, query, postData) {
+  return fetch(query, {
+    method: type,
+    headers: {
+      "Content-type": "application/json;charset=utf-8",
+    },
+    body: JSON.stringify(postData),
+  })
+    .then((res) => {
+      if (!res.ok) throw new Error(type + ": " + res.statusText);
+      return res;
+    })
+    .catch(handleError);
+}
+
+function handleError(err) {
+  console.error(err);
+}
