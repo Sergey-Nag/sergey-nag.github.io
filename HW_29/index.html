@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Слайдер в ООП-стиле</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  
+  <div class="slider">
+    <div class="slider__wrapp">
+      <div class="slider__container" id="container"></div>
+    </div>
+  </div>
+  
+  <script src="slider.js"></script>
+  <script>
+    const slidesArr = [
+      {
+         heading: "Slide 1", description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit.", imgUrl: "https://st.depositphotos.com/1899425/1623/i/600/depositphotos_16232649-stock-photo-moraine-lake-sunrise-colorful-landscape.jpg"
+      },
+      {
+         heading: "Slide 2", description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis accusamus, doloribus animi impedit, fugiat consequuntur vitae! Quod consectetur, aperiam dolores.", imgUrl: "https://icocnews.ru/wp-content/uploads/2015/09/priroda.jpg"
+      },
+      {
+         heading: "Lorem ipsum dolor", description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. In laborum fuga quos voluptatum eum quaerat excepturi assumenda, esse at explicabo, saepe earum ipsam non sunt libero ratione similique tempora.", imgUrl: "https://kaifolog.ru/uploads/posts/2016-11/1480227668_00_1.jpg"
+      },
+    ];
+    
+    const slidesContainer = document.getElementById('container');
+    
+    const slider = new Slider({
+      container: slidesContainer,
+      slides: slidesArr
+    });
+    
+    
+    
+  </script>
+</body>
+</html>
