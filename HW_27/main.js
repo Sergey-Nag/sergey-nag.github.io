@@ -41,7 +41,17 @@ sendRequest("POST", "https://async-demo.herokuapp.com/objects?prob=20", {
           return;
         }
 
-        console.log("DONE", JSON.parse(res));
+        console.log("UPDATED", JSON.parse(res));
+        
+        sendRequest("DELETE", `https://async-demo.herokuapp.com/objects/${id}?prob=20`, {}, (err, res) => {
+            if (err) {
+              console.error(err);
+              return;
+            }
+
+            console.log("DELETED", JSON.parse(res));
+          }
+        );
       }
     );
   }
